@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trot Location Catcher</title>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <di id="map"></di>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js"></script>
+    <script>
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoibHVpemdvdXZlaWEiLCJhIjoiY2xjdXl2cm13MWVuYjN2bjI1Zm52YzlxMyJ9.7kLMyI3txoSysT9jNppnDA";
+
+      var map = new mapboxgl.Map({
+        container: "map", //container if
+        style: "mapbox://styles/mapbox/streets-v12", // stylesheet location
+        center: [-24, 42], // starting center in [lng, lat]
+        zoom: 1, // starting zoom
+      });
+      // Add geolocate control to the map.
+      map.addControl(
+        new mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: true,
+          },
+          // When active the map will receive updates to the device's location as it changes.
+          trackUserLocation: true,
+          // Draw an arrow next to the location dot to indicate which direction the device is heading.
+          showUserHeading: true,
+        })
+      );
+    </script>
+  </body>
+</html>
