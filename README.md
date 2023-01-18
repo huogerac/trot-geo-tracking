@@ -49,3 +49,11 @@ Entre na [📍 Milestone 1 - Estrutura base](https://github.com/huogerac/trot-ge
 Lembre-se: Nao existe pergunta boba, nao tenha medo de enviar código errado, vamos errar rápido para conseguir chegar em uma versão melhorada.
 
 Veja o [guia de contribuição](CONTRIBUTING.md)
+
+## Colaboradores
+
+- Roger Camargo
+- Luiz Gouveia
+- Henrique de Andrade
+- Tomás Rajão
+- Jonathan Manoel
