@@ -50,3 +50,10 @@ Lembre-se: Nao existe pergunta boba, nao tenha medo de enviar código errado, va
 
 Veja o [guia de contribuição](CONTRIBUTING.md)
 
+## Colaboradores
+
+- Roger Camargo
+- Luiz Gouveia
+- Henrique de Andrade
+- Tomás Rajão
+- Jonathan Manoel
