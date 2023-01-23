@@ -18,7 +18,7 @@ Fique à vontade para:
 - Estrutura de pastas 👉 [#1](https://github.com/huogerac/trot-geo-tracking/issues/1)
 - Mapa de navegação inicial 👉 [#6](https://github.com/huogerac/trot-geo-tracking/issues/6) [#2](https://github.com/huogerac/trot-geo-tracking/issues/2) [#4](https://github.com/huogerac/trot-geo-tracking/issues/4)
 - Linter/Estilo de código 👉 [#3](https://github.com/huogerac/trot-geo-tracking/issues/3) [#5](https://github.com/huogerac/trot-geo-tracking/issues/5)
-- Glosário
+- Glossário
 
 ### 📍 [Milestone 2 - Salvar posição](https://github.com/huogerac/trot-geo-tracking/milestone/2)
 
