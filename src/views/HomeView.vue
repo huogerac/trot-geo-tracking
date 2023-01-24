@@ -2,11 +2,7 @@
   <v-container class="fill-height">
     <v-responsive class="d-flex align-center text-center fill-height">
       <v-form>
-        <v-text-field
-          v-model="percurso"
-          label="Novo percurso"
-          required
-        ></v-text-field>
+        <v-text-field v-model="percurso" label="Novo percurso" required></v-text-field>
 
         <v-btn variant="flat" color="secondary" block> INICIAR </v-btn>
       </v-form>
@@ -19,7 +15,7 @@ export default {
   data() {
     return {
       percurso: "a",
-    };
+    }
   },
-};
+}
 </script>
