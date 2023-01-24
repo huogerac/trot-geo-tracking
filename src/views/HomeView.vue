@@ -14,7 +14,7 @@
 export default {
   data() {
     return {
-      percurso: "a",
+      percurso: "",
     }
   },
 }
