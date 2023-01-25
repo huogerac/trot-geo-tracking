@@ -11,5 +11,5 @@
     console.log(`Something went wrong: ${err}`)
 }  
 let evento = () => {
-  navigator.geolocation.getCurrentPosition(geoSuccess, geoErr)
+  navigator.geolocation.watchPosition(geoSuccess)
 }
