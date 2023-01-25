@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
   data() {
     return {
@@ -69,6 +70,23 @@ export default {
     parar() {
       navigator.geolocation.clearWatch(this.id)
       this.id = 0
+    },
+    async addGeolocation(lat, long) {
+      const res = await axios.post(`http://localhost:3001/api/geolocation`, {
+        latitude: lat,
+        longitude: long,
+      })
+      this.geolocation.push(res.data)
+    },
+    eraseDb() {
+      axios
+        .get(`http://localhost:3001/api/geolocation`)
+        .then((geolocation) => {
+          geolocation.data.forEach((item) => {
+            axios.delete(`http://localhost:3001/api/geolocation/${item.id}`)
+          })
+        })
+        .finally((this.geolocation = []))
     },
   },
 }
