@@ -57,3 +57,10 @@ Veja o [guia de contribuição](CONTRIBUTING.md)
 - Henrique de Andrade
 - Tomás Rajão
 - Jonathan Manoel
+
+## Encontros
+- Terça e Quinta às 20h via [Zoom](https://us06web.zoom.us/j/3226369034?pwd=K1VkeDFHREUyQldINTNCT2ZJYS9QUT09)
+
+## Links
+
+- [Ambiente de DEV](https://trot-geo-tracking-brown.vercel.app/)
