@@ -4,16 +4,18 @@
       <v-form>
         <v-text-field v-model="percurso" label="Novo percurso" required></v-text-field>
 
-        <v-btn variant="flat" color="secondary" block @click="obterMinhaPosicao"> INICIAR </v-btn>
+        <v-btn v-if="id == 0" variant="flat" color="secondary" block @click="iniciar">
+          INICIAR
+        </v-btn>
+        <v-btn v-else variant="flat" color="secondary" block @click="parar"> PARAR </v-btn>
       </v-form>
-      <p>latitude: {{ latitude }}</p>
-      <p>longitude: {{ longitude }}</p>
-      <p>Acurácia: {{ latLongAccuracy?.toFixed(2) }} m</p>
-      <p>Altitude: {{ altitude }} m</p>
-      <p>Acurácia da Altitude: {{ altitudeAccuracy }} m</p>
-      <p>Heading: {{ heading }} °</p>
-      <p>Velocidade: {{ speed }} m / s</p>
-      <p>Timestamp: {{ timestamp }}</p>
+
+      <h2>Posições: {{ positions.length }}</h2>
+      <ul>
+        <li v-for="(position, idx) in positions" :key="idx">
+          ({{ position.latitude }}, {{ position.longitude }})
+        </li>
+      </ul>
     </v-responsive>
   </v-container>
 </template>
@@ -22,38 +24,35 @@
 export default {
   data() {
     return {
+      id: 0,
+      positions: [],
       percurso: "",
-      latitude: null,
-      longitude: null,
-      latLongAccuracy: null,
-      heading: null,
-      speed: null,
-      altitude: null,
-      altitudeAccuracy: null,
-      timestamp: null,
-      date: null,
     }
   },
   methods: {
     geoSuccess(position) {
-      this.latitude = position.coords.latitude
-      this.longitude = position.coords.longitude
-      this.latLongAccuracy =  position.coords.accuracy
-
-      this.heading =  position.coords.heading
-      this.speed =  position.coords.speed
-
-      this.altitude =  position.coords.altitude
-      this.altitudeAccuracy =  position.coords.altitudeAccuracy
-
-      this.timestamp = position.timestamp
-      this.date = new Date().getTime()
+      const newPosition = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        latLongAccuracy: position.coords.accuracy,
+        heading: position.coords.heading,
+        speed: position.coords.speed,
+        altitude: position.coords.altitude,
+        altitudeAccuracy: position.coords.altitudeAccuracy,
+        date: new Date().getTime(),
+      }
+      this.positions.push(newPosition)
     },
     geoError(error) {
       console.log("Vish, deu ruim!", error)
     },
-    obterMinhaPosicao() {
-      navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError)
+    iniciar() {
+      //navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError)
+      this.id = navigator.geolocation.watchPosition(this.geoSuccess, this.geoError)
+    },
+    parar() {
+      navigator.geolocation.clearWatch(this.id)
+      this.id = 0
     },
   },
 }
