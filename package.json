@@ -28,7 +28,6 @@
     "@vue/eslint-config-prettier": "^7.0.0",
     "eslint-config-prettier": "^8.5.0",
     "jsdom": "^20.0.3",
-    "prettier": "2.8.1",
-    "json-server": "^0.17.1"
+    "prettier": "2.8.1"
   }
 }

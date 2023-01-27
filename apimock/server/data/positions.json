@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "track_id": 1,
+    "coords": {
+      "latitude": 23,
+      "longitude": -45,
+      "latLongAccuracy": 1,
+      "heading": null,
+      "speed": null,
+      "altitude": 400,
+      "altitudeAccuracy": 1
+    }
+  }
+]
