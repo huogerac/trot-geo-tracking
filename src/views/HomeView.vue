@@ -2,9 +2,9 @@
   <v-container class="fill-height">
     <v-responsive class="d-flex align-center text-center fill-height">
       <v-form>
-        <v-text-field v-model="percurso" label="Novo percurso" required></v-text-field>
+        <v-text-field v-model="trackName" label="Novo trackName" required></v-text-field>
 
-        <v-btn v-if="id == 0" variant="flat" color="secondary" block @click="iniciar">
+        <v-btn v-if="geoId == 0" variant="flat" color="secondary" block @click="iniciar">
           INICIAR
         </v-btn>
         <v-btn v-else variant="flat" color="secondary" block @click="parar"> PARAR </v-btn>
@@ -29,14 +29,17 @@
 </template>
 
 <script>
-import axios from "axios"
+import TracksApi from "@/api/tracks.api"
+import PositionsApi from "@/api/positions.api"
+
 export default {
   data() {
     return {
-      id: 0,
+      geoId: 0,
+      trackId: 0,
       lastPosition: {},
       positions: [],
-      percurso: "",
+      trackName: "",
     }
   },
   methods: {
@@ -47,7 +50,7 @@ export default {
       ) {
         return
       }
-      const newPosition = {
+      const coords = {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
         latLongAccuracy: position.coords.accuracy,
@@ -57,36 +60,22 @@ export default {
         altitudeAccuracy: position.coords.altitudeAccuracy,
         date: new Date().getTime(),
       }
-      this.positions.push(newPosition)
-      this.lastPosition = newPosition
+      this.positions.push(coords)
+      this.lastPosition = coords
+      PositionsApi.addPosition(this.trackId, coords)
     },
     geoError(error) {
       console.log("Vish, deu ruim!", error)
     },
     iniciar() {
-      //navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError)
-      this.id = navigator.geolocation.watchPosition(this.geoSuccess, this.geoError)
+      TracksApi.addTrack(this.trackName || "novo trackName").then((newTrack) => {
+        this.trackId = newTrack.id
+        this.geoId = navigator.geolocation.watchPosition(this.geoSuccess, this.geoError)
+      })
     },
     parar() {
-      navigator.geolocation.clearWatch(this.id)
-      this.id = 0
-    },
-    async addGeolocation(lat, long) {
-      const res = await axios.post(`http://localhost:3001/api/geolocation`, {
-        latitude: lat,
-        longitude: long,
-      })
-      this.geolocation.push(res.data)
-    },
-    eraseDb() {
-      axios
-        .get(`http://localhost:3001/api/geolocation`)
-        .then((geolocation) => {
-          geolocation.data.forEach((item) => {
-            axios.delete(`http://localhost:3001/api/geolocation/${item.id}`)
-          })
-        })
-        .finally((this.geolocation = []))
+      navigator.geolocation.clearWatch(this.geoId)
+      this.geoId = 0
     },
   },
 }

@@ -21,11 +21,12 @@ module.exports = {
     return
   },
   add: (req, res) => {
-    const { track_id, coords } = req.body
+    const { trackId } = req.params
+    const { coords } = req.body
     const id = getMaxId(data.positions) + 1
     const newPosition = {
       id,
-      track_id,
+      track_id: trackId,
       coords,
     }
     data.positions.push(newPosition)

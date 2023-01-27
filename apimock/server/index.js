@@ -30,7 +30,7 @@ app.post("/api/tracks/add", tracks.add)
 
 // POSITIONS
 app.get("/api/positions/tracks/:id", positions.find)
-app.post("/api/positions/tracks/:id/add", positions.add)
+app.post("/api/positions/tracks/:trackId/add", positions.add)
 
 app.listen(PORT, () => {
   console.log(YELLOW, "🆙 API MOCK using express is running on port: " + PORT, WHITE)
