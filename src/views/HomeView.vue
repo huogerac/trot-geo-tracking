@@ -10,6 +10,14 @@
         <v-btn v-else variant="flat" color="secondary" block @click="parar"> PARAR </v-btn>
       </v-form>
 
+      <p v-if="lastPosition">
+        <span>latitude:</span><span>{{ lastPosition.latitude }}</span> <span>longitude:</span
+        ><span>{{ lastPosition.longitude }}</span> <span>heading:</span
+        ><span>{{ lastPosition.heading }}</span> <span>speed:</span
+        ><span>{{ lastPosition.speed }}</span> <span>altitude:</span
+        ><span>{{ lastPosition.altitude }}</span>
+      </p>
+
       <h2>Posições: {{ positions.length }}</h2>
       <ul>
         <li v-for="(position, idx) in positions" :key="idx">
@@ -25,12 +33,19 @@ export default {
   data() {
     return {
       id: 0,
+      lastPosition: {},
       positions: [],
       percurso: "",
     }
   },
   methods: {
     geoSuccess(position) {
+      if (
+        position.coords.latitude == this.lastPosition.latitude &&
+        position.coords.longitude == this.lastPosition.longitude
+      ) {
+        return
+      }
       const newPosition = {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
@@ -42,6 +57,7 @@ export default {
         date: new Date().getTime(),
       }
       this.positions.push(newPosition)
+      this.lastPosition = newPosition
     },
     geoError(error) {
       console.log("Vish, deu ruim!", error)
