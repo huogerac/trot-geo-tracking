@@ -24,6 +24,7 @@
           ({{ position.latitude }}, {{ position.longitude }})
         </li>
       </ul>
+      <v-btn color="primary" variant="flat" :to="{ name: 'PercursoDetalheView' }" class="my-4">Ver percurso</v-btn>
     </v-responsive>
   </v-container>
 </template>
