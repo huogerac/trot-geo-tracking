@@ -24,12 +24,22 @@
           ({{ position.latitude }}, {{ position.longitude }})
         </li>
       </ul>
+      <v-btn color="primary" variant="flat" :to="{ name: 'PercursoDetalheView' }" class="my-4">Ver percurso</v-btn>
     </v-responsive>
   </v-container>
 </template>
 
 <script>
+import { useLocationStore } from "@/store/location"
+
 export default {
+  setup() {
+    const locationStore = useLocationStore()
+
+    return {
+      locationStore
+    }
+  },
   data() {
     return {
       id: 0,
@@ -56,7 +66,8 @@ export default {
         altitudeAccuracy: position.coords.altitudeAccuracy,
         date: new Date().getTime(),
       }
-      this.positions.push(newPosition)
+      this.locationStore.savePositions(newPosition)
+      // this.positions.push(newPosition)
       this.lastPosition = newPosition
     },
     geoError(error) {
