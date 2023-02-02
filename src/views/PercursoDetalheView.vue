@@ -3,32 +3,14 @@
     <v-responsive class="d-flex align-center text-center fill-height">
       <h1>Tela de Visualização</h1>
 
-      <ol-map
-        :load-tiles-while-animating="true"
-        :load-tiles-while-interacting="true"
-        style="height: 400px">
-        <ol-view
-          ref="view"
-          :center="center"
-          :rotation="rotation"
-          :zoom="zoom"
-          :projection="projection" />
+      <open-layer-map-viewer :positions-list="latLon" :center="center"></open-layer-map-viewer>
 
-        <ol-tile-layer>
-          <ol-source-osm />
-        </ol-tile-layer>
-
-        <ol-vector-layer>
-          <ol-source-vector>
-            <ol-feature>
-              <ol-geom-line-string :coordinates="latLon"></ol-geom-line-string>
-              <ol-style>
-                <ol-style-stroke :color="strokeColor" :width="strokeWidth"></ol-style-stroke>
-              </ol-style>
-            </ol-feature>
-          </ol-source-vector>
-        </ol-vector-layer>
-      </ol-map>
+      <h2>Positions:</h2>
+      <ul>
+        <li v-for="(position, idx) in positions" :key="idx">
+          <p>{{ position }}</p>
+        </li>
+      </ul>
     </v-responsive>
   </v-container>
 </template>
@@ -36,8 +18,12 @@
 <script>
 import { mapState } from "pinia"
 import { useLocationStore } from "@/store/location"
+import OpenLayerMapViewer from "@/components/OpenLayerMapViewer.vue"
 
 export default {
+  components: {
+    OpenLayerMapViewer,
+  },
   data() {
     return {
       projection: "EPSG:4326",
