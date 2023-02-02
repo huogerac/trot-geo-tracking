@@ -11,11 +11,11 @@
       </v-form>
 
       <p v-if="lastPosition">
-        <span>latitude:</span><span>{{ lastPosition.latitude }}</span> <span>longitude:</span
-        ><span>{{ lastPosition.longitude }}</span> <span>heading:</span
-        ><span>{{ lastPosition.heading }}</span> <span>speed:</span
-        ><span>{{ lastPosition.speed }}</span> <span>altitude:</span
-        ><span>{{ lastPosition.altitude }}</span>
+        <span>latitude:</span><span>{{ lastPosition.latitude }}</span> <span>longitude:</span>
+        <span>{{ lastPosition.longitude }}</span> <span>heading:</span>
+        <span>{{ lastPosition.heading }}</span> <span>speed:</span>
+        <span>{{ lastPosition.speed }}</span> <span>altitude:</span>
+        <span>{{ lastPosition.altitude }}</span>
       </p>
 
       <h2>Posições: {{ positions.length }}</h2>
@@ -24,7 +24,9 @@
           ({{ position.latitude }}, {{ position.longitude }})
         </li>
       </ul>
-      <v-btn color="primary" variant="flat" :to="{ name: 'PercursoDetalheView' }" class="my-4">Ver percurso</v-btn>
+      <v-btn color="primary" variant="flat" :to="{ name: 'PercursoDetalheView' }" class="my-4">
+        Ver percurso
+      </v-btn>
     </v-responsive>
   </v-container>
 </template>
@@ -37,7 +39,7 @@ export default {
     const locationStore = useLocationStore()
 
     return {
-      locationStore
+      locationStore,
     }
   },
   data() {
