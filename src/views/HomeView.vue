@@ -10,31 +10,32 @@
         <v-btn v-else variant="flat" color="secondary" block @click="parar"> PARAR </v-btn>
       </v-form>
 
-      <p v-if="lastPosition">
-        <span>latitude:</span><span>{{ lastPosition.latitude }}</span> <span>longitude:</span>
-        <span>{{ lastPosition.longitude }}</span> <span>heading:</span>
-        <span>{{ lastPosition.heading }}</span> <span>speed:</span>
-        <span>{{ lastPosition.speed }}</span> <span>altitude:</span>
-        <span>{{ lastPosition.altitude }}</span>
-      </p>
+      <div v-if="lastPosition">
+        <h2>Última posição</h2>
+        <p>
+          <span>{{ lastPosition }}</span>
+        </p>
+      </div>
 
-      <h2>Posições: {{ positions.length }}</h2>
-      <ul>
-        <li v-for="(position, idx) in positions" :key="idx">
-          ({{ position.latitude }}, {{ position.longitude }})
-        </li>
-      </ul>
       <v-btn color="primary" variant="flat" :to="{ name: 'PercursoDetalheView' }" class="my-4">
         Ver percurso
       </v-btn>
+
+      <open-layer-map-point-viewer v-if="latLon" :positions-list="latLon" :center="center">
+      </open-layer-map-point-viewer>
     </v-responsive>
   </v-container>
 </template>
 
 <script>
+import { mapState } from "pinia"
 import { useLocationStore } from "@/store/location"
+import OpenLayerMapPointViewer from "@/components/OpenLayerMapPointViewer.vue"
 
 export default {
+  components: {
+    OpenLayerMapPointViewer,
+  },
   setup() {
     const locationStore = useLocationStore()
 
@@ -49,6 +50,12 @@ export default {
       positions: [],
       percurso: "",
     }
+  },
+  computed: {
+    ...mapState(useLocationStore, ["latLon"]),
+    center() {
+      return this?.latLon[0]
+    },
   },
   methods: {
     geoSuccess(position) {

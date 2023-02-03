@@ -3,8 +3,12 @@
     <v-responsive class="d-flex align-center text-center fill-height">
       <h1>Tela de Visualização</h1>
 
+      <h2>Linhas</h2>
       <open-layer-map-viewer :positions-list="latLon" :center="center"></open-layer-map-viewer>
 
+      <h2>Pontos</h2>
+      <open-layer-map-point-viewer :positions-list="latLon" :center="center">
+      </open-layer-map-point-viewer>
       <h2>Positions:</h2>
       <ul>
         <li v-for="(position, idx) in positions" :key="idx">
@@ -19,10 +23,12 @@
 import { mapState } from "pinia"
 import { useLocationStore } from "@/store/location"
 import OpenLayerMapViewer from "@/components/OpenLayerMapViewer.vue"
+import OpenLayerMapPointViewer from "@/components/OpenLayerMapPointViewer.vue"
 
 export default {
   components: {
     OpenLayerMapViewer,
+    OpenLayerMapPointViewer,
   },
   data() {
     return {
