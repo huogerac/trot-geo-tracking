@@ -40,6 +40,7 @@ export default {
       return this?.latLon[0]
     },
   },
+
   methods: {},
 }
 </script>
