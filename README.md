@@ -11,20 +11,31 @@ Fique à vontade para:
 
 ## Milestones
 
-### 📍 [Milestone 1 - Estrutura base](https://github.com/huogerac/trot-geo-tracking/milestone/1)
+### ✅ [Milestone 1 - Estrutura base](https://github.com/huogerac/trot-geo-tracking/milestone/1)
 
-- [Descrição do produto](Geo-Tracking.md) 👈 Comece AQUI
-- Arquitetura
-- Estrutura de pastas 👉 [#1](https://github.com/huogerac/trot-geo-tracking/issues/1)
-- Mapa de navegação inicial 👉 [#6](https://github.com/huogerac/trot-geo-tracking/issues/6) [#2](https://github.com/huogerac/trot-geo-tracking/issues/2) [#4](https://github.com/huogerac/trot-geo-tracking/issues/4)
-- Linter/Estilo de código 👉 [#3](https://github.com/huogerac/trot-geo-tracking/issues/3) [#5](https://github.com/huogerac/trot-geo-tracking/issues/5)
-- Glossário
+- ✅ [Descrição do produto](Geo-Tracking.md) 👈 Comece AQUI
+- ✅ Arquitetura (visão geral)
+- ✅ Estrutura de pastas inicial 👉 [#1](https://github.com/huogerac/trot-geo-tracking/issues/1)
+- ✅ Mapa de navegação inicial 👉 [#6](https://github.com/huogerac/trot-geo-tracking/issues/6) [#2](https://github.com/huogerac/trot-geo-tracking/issues/2) [#4](https://github.com/huogerac/trot-geo-tracking/issues/4)
+- ✅ Linter/Estilo de código 👉 [#3](https://github.com/huogerac/trot-geo-tracking/issues/3) [#5](https://github.com/huogerac/trot-geo-tracking/issues/5)
+- ✅ Deploy na vercel [trot-geo-tracking-brown.vercel.app](http://trot-geo-tracking-brown.vercel.app/)
+- 🏗️ [Glossário](Glossario.md)
 
-### 📍 [Milestone 2 - Salvar posição](https://github.com/huogerac/trot-geo-tracking/milestone/2)
+### 🏗️ [Milestone 2 - Salvar posição](https://github.com/huogerac/trot-geo-tracking/milestone/2)
+
+Participe das tarefas que estamos trabalhando no momento!
+
+- Discussão sobre arquitetura/stack iniciada na milestone 1 e continua aberta aqui 👉 [#10](https://github.com/huogerac/trot-geo-tracking/issues/10)
 
 - Definir forma de acessar GPS do fone para obter a posição 👉 [#7](https://github.com/huogerac/trot-geo-tracking/issues/7)
+    - Alguns testes com as posições [Issue 8](https://github.com/huogerac/trot-geo-tracking/issues/8) e [Issue 27](https://github.com/huogerac/trot-geo-tracking/issues/27)
+
+- Criar CI para rodar o linter no Github Actions 👉 [Issue 5](https://github.com/huogerac/trot-geo-tracking/issues/5)
+- API mock para testar local sem backend/ajudar desenhar backend 👉 [Issue 18](https://github.com/huogerac/trot-geo-tracking/issues/18)
+
 - Criar banco de dados georreferenciado
-- Criar backend para receber e salvar posições
+    - Fazer um diagrama (DER) com uma visão geral das entidades/campos que precisamos salvar 👉 [Issue 17](https://github.com/huogerac/trot-geo-tracking/issues/17
+- Implementar backend inicial para receber e salvar posições
 
 ### 📍 [Milestone 3 - Visualizar percurso](https://github.com/huogerac/trot-geo-tracking/milestone/3)
 
