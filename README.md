@@ -9,9 +9,14 @@ Fique à vontade para:
 - Participar das discussões através das [Issues](https://github.com/huogerac/trot-geo-tracking/issues)
 - Contribuir em qualquer funcionalidade (Envie PR ou acesse este [trello](https://trello.com/b/45mIZuwb/geotracking) para pedir acesso a este repo)
 
+## Tarefas nao tecnicas que precisamos de ajuda
+
+- Documentar o que estamos fazendo
+- Descrever melhor as Issues
+
 ## Milestones
 
-### ✅ [Milestone 1 - Estrutura base](https://github.com/huogerac/trot-geo-tracking/milestone/1)
+### ✅ [Milestone v0.0.1 - Estrutura base](https://github.com/huogerac/trot-geo-tracking/milestone/1)
 
 - ✅ [Descrição do produto](Geo-Tracking.md) 👈 Comece AQUI
 - ✅ Arquitetura (visão geral)
@@ -21,35 +26,48 @@ Fique à vontade para:
 - ✅ Deploy na vercel [trot-geo-tracking-brown.vercel.app](http://trot-geo-tracking-brown.vercel.app/)
 - 🏗️ [Glossário](Glossario.md)
 
-### 🏗️ [Milestone 2 - Salvar posição](https://github.com/huogerac/trot-geo-tracking/milestone/2)
+### ✅ [Milestone v0.0.2 - Salvar posição](https://github.com/huogerac/trot-geo-tracking/milestone/2)
+
+- ✅ Definir forma de acessar GPS do fone para obter a posição 👉 [#7](https://github.com/huogerac/trot-geo-tracking/issues/7)
+
+### ✅ [Milestone v0.0.3 - Visualizar pontos](https://github.com/huogerac/trot-geo-tracking/milestone/3)
+
+- ✅ Definir biblioteca para visualização de uma lista de posições 👉 [#8](https://github.com/huogerac/trot-geo-tracking/issues/8)
+- Visualizar pontos na home #8
+- ✅ Alguns testes com as posições [Issue 8](https://github.com/huogerac/trot-geo-tracking/issues/8) 
+- ✅ Mais testes visualização [Issue 27](https://github.com/huogerac/trot-geo-tracking/issues/27)
+
+
+### 🏗️ [Milestone v0.0.4 - Melhoria salvar e xibir pontos](https://github.com/huogerac/trot-geo-tracking/milestone/4)
 
 Participe das tarefas que estamos trabalhando no momento!
 
+- [Melhorar o salvar e exibir com base no historico](https://github.com/huogerac/trot-geo-tracking/issues/28) das issues #8 e #27 para melhorar
+a acurácia
+
 - Discussão sobre arquitetura/stack iniciada na milestone 1 e continua aberta aqui 👉 [#10](https://github.com/huogerac/trot-geo-tracking/issues/10)
 
-- Definir forma de acessar GPS do fone para obter a posição 👉 [#7](https://github.com/huogerac/trot-geo-tracking/issues/7)
-    - Alguns testes com as posições [Issue 8](https://github.com/huogerac/trot-geo-tracking/issues/8) e [Issue 27](https://github.com/huogerac/trot-geo-tracking/issues/27)
-
 - Criar CI para rodar o linter no Github Actions 👉 [Issue 5](https://github.com/huogerac/trot-geo-tracking/issues/5)
+
 - API mock para testar local sem backend/ajudar desenhar backend 👉 [Issue 18](https://github.com/huogerac/trot-geo-tracking/issues/18)
 
 - Criar banco de dados georreferenciado
     - Fazer um diagrama (DER) com uma visão geral das entidades/campos que precisamos salvar 👉 [Issue 17](https://github.com/huogerac/trot-geo-tracking/issues/17
 - Implementar backend inicial para receber e salvar posições
 
-### 📍 [Milestone 3 - Visualizar percurso](https://github.com/huogerac/trot-geo-tracking/milestone/3)
+### 📍 [Milestone 5 - Visualizar percurso](https://github.com/huogerac/trot-geo-tracking/milestone/3)
 
-- Definir biblioteca para visualização de uma lista de posições 👉 [#8](https://github.com/huogerac/trot-geo-tracking/issues/8)
+
 - Receber e exibir pontos do backend
 
-### 📍 Milestone 4 - Conta de usuários
+### 📍 Milestone 6 - Conta de usuários
 
 - Signin & Signup de usuário
 - Salvar percursos relacionado com usuários
 - Exibir lista de percursos do usuário
 - Exibir detalhes de um percurso
 
-### 📍 Milestone 5 - Visão de produto & UI/UX
+### 📍 Milestone 7 - Visão de produto & UI/UX
 
 - TODO
 
