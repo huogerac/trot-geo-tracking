@@ -23,9 +23,9 @@ Fique à vontade para:
 - 🏗️ Arquitetura (visão geral) [Issue 10](https://github.com/huogerac/trot-geo-tracking/issues/10)
 - ✅ Mapa de navegação inicial 👉 [#6](https://github.com/huogerac/trot-geo-tracking/issues/6) [#2](https://github.com/huogerac/trot-geo-tracking/issues/2) [#4](https://github.com/huogerac/trot-geo-tracking/issues/4)
 - ✅ Estrutura de pastas inicial 👉 [#1](https://github.com/huogerac/trot-geo-tracking/issues/1)
-     (Vue 3 + Vuetify + estrutura de pastas, Pagina inicial)
+  (Vue 3 + Vuetify + estrutura de pastas, Pagina inicial)
 - ✅ Linter/Estilo de código 👉 [#3](https://github.com/huogerac/trot-geo-tracking/issues/3) [#5](https://github.com/huogerac/trot-geo-tracking/issues/5)
-     (ESLint + Prettier)
+  (ESLint + Prettier)
 - ✅ Deploy na vercel [trot-geo-tracking-brown.vercel.app](http://trot-geo-tracking-brown.vercel.app/)
 
 ### ✅ [Milestone v0.0.2 - Salvar posição](https://github.com/huogerac/trot-geo-tracking/milestone/2) [FEITO]
@@ -39,13 +39,12 @@ Fique à vontade para:
 - ✅ Alguns testes com as posições [Issue 8](https://github.com/huogerac/trot-geo-tracking/issues/8)
 - ✅ Mais testes visualização [Issue 27](https://github.com/huogerac/trot-geo-tracking/issues/27)
 
-
 ### 🏗️ [Milestone v0.0.4 - Melhoria salvar e exibir os pontos](https://github.com/huogerac/trot-geo-tracking/milestone/4) [WIP]
 
 👉 Participe das tarefas que estamos trabalhando no momento!
 
 - [Melhorar o salvar e exibir com base no historico](https://github.com/huogerac/trot-geo-tracking/issues/28) das issues #8 e #27 para melhorar
-a acurácia
+  a acurácia
 
 - Discussão sobre arquitetura/stack iniciada na milestone 1 e continua aberta aqui 👉 [#10](https://github.com/huogerac/trot-geo-tracking/issues/10)
 
@@ -54,7 +53,7 @@ a acurácia
 - API mock para testar local sem backend/ajudar desenhar backend 👉 [Issue 18](https://github.com/huogerac/trot-geo-tracking/issues/18)
 
 - Criar banco de dados georreferenciado
-    - Fazer um diagrama (DER) com uma visão geral das entidades/campos que precisamos salvar 👉 [Issue 17](https://github.com/huogerac/trot-geo-tracking/issues/17
+  - Fazer um diagrama (DER) com uma visão geral das entidades/campos que precisamos salvar 👉 [Issue 17](https://github.com/huogerac/trot-geo-tracking/issues/17
 - Implementar backend inicial para receber e salvar posições
 
 ### 📍 Milestone v0.0.5 - Salvar e Receber posições do backend
