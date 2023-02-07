@@ -9,7 +9,7 @@ Fique à vontade para:
 - Participar das discussões através das [Issues](https://github.com/huogerac/trot-geo-tracking/issues)
 - Contribuir em qualquer funcionalidade (Envie PR ou acesse este [trello](https://trello.com/b/45mIZuwb/geotracking) para pedir acesso a este repo)
 
-## Tarefas não tecnicas que precisamos de ajuda
+## Tarefas não técnicas que precisamos de ajuda
 
 - Documentar o que estamos fazendo
 - Descrever melhor as Issues
@@ -78,6 +78,8 @@ Entre na [📍 Milestone 1 - Estrutura base](https://github.com/huogerac/trot-ge
 Lembre-se: Nao existe pergunta boba, não tenha medo de enviar código errado, vamos errar rápido para conseguir chegar em uma versão melhorada o quanto antes.
 
 Veja o [guia de contribuição](CONTRIBUTING.md)
+
+Veja [nossa playlist](https://www.youtube.com/watch?v=oDh1WhJ3SJc&list=PL1Skk6O-pP7vE5fvOI6I70t2tOxzVEqnT) com mais detalhes das Issues de cada milestone
 
 ## Colaboradores
 
