@@ -10,11 +10,26 @@
         <v-btn v-else variant="flat" color="secondary" block @click="parar"> PARAR </v-btn>
       </v-form>
 
-      <div v-if="lastPosition">
+      <div v-if="lastPosition.latitude">
         <h2>Última posição</h2>
         <p>
-          <span>{{ lastPosition }}</span>
+          latitude:<em>{{ lastPosition.latitude }}</em>
         </p>
+        <p>
+          longitude:<em>{{ lastPosition.longitude }}</em>
+        </p>
+        <p>
+          latLongAccuracy:<em>{{ lastPosition.latLongAccuracy }}</em>
+        </p>
+        <p>
+          quality:<em>{{ lastPosition.quality }}</em>
+        </p>
+        <p>
+          <v-btn color="success" variant="flat" @click="marcarPontoComoBom"> BOM </v-btn>
+          <v-btn color="error" variant="flat" @click="marcarPontoComoRuim"> RUIM </v-btn>
+        </p>
+        <p>latLon: {{ latLon }}</p>
+        <p>center: {{ center }}</p>
       </div>
 
       <v-btn color="primary" variant="flat" :to="{ name: 'PercursoDetalheView' }" class="my-4">
@@ -54,7 +69,7 @@ export default {
   computed: {
     ...mapState(useLocationStore, ["latLon"]),
     center() {
-      return this?.latLon[0]
+      return this?.latLon?.slice(-1)[0]
     },
   },
   methods: {
@@ -89,6 +104,14 @@ export default {
     parar() {
       navigator.geolocation.clearWatch(this.id)
       this.id = 0
+    },
+    marcarPontoComoRuim() {
+      console.log("ruim")
+      this.locationStore.badPosition()
+    },
+    marcarPontoComoBom() {
+      console.log("bom")
+      this.locationStore.goodPosition()
     },
   },
 }
