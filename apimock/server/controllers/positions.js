@@ -30,6 +30,7 @@ module.exports = {
       coords,
     }
     data.positions.push(newPosition)
+    console.log("📍 nova posição adicionada no trajeto:", trackId)
     res.send(newPosition)
   },
 }

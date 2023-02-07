@@ -7,10 +7,11 @@
 // Plugins
 import { loadFonts } from "./webfontloader"
 import vuetify from "./vuetify"
+import OpenLayersMap from "./openlayers"
 import pinia from "../store"
 import router from "../router"
 
 export function registerPlugins(app) {
   loadFonts()
-  app.use(vuetify).use(pinia).use(router)
+  app.use(vuetify).use(OpenLayersMap).use(pinia).use(router)
 }

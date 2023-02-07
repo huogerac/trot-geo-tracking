@@ -29,6 +29,7 @@ module.exports = {
       name,
     }
     data.tracks.push(newTrack)
+    console.log("🌎 novo trajeto adicionado:", id, name)
     res.send(newTrack)
   },
 }

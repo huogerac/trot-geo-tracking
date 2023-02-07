@@ -5,8 +5,9 @@
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --fix --ignore-path .gitignore",
-    "format": "prettier .  --write"
+    "lint": "eslint . --ignore-path .gitignore && prettier --check .",
+    "lint:fix": "eslint . --fix --ignore-path .gitignore",
+    "format": "eslint . --fix --ignore-path .gitignore && prettier .  --write"
   },
   "dependencies": {
     "@mdi/font": "7.0.96",
@@ -15,6 +16,7 @@
     "roboto-fontface": "*",
     "vue": "^3.2.38",
     "vue-router": "^4.0.0",
+    "vue3-openlayers": "^0.1.71",
     "vuetify": "^3.0.0",
     "webfontloader": "^1.0.0"
   },
