@@ -8,6 +8,19 @@
           INICIAR
         </v-btn>
         <v-btn v-else variant="flat" color="secondary" block @click="parar"> PARAR </v-btn>
+        <p>
+          Descartar pontos com acurácia pior que:
+          <v-chip class="ma-2" color="pink" label text-color="white">
+            <v-icon start icon="mdi-trash-can-outline"></v-icon>
+            {{ positionsUnused }}
+          </v-chip>
+        </p>
+        <v-slider
+          v-model="accuracyThreshold"
+          :min="6"
+          :max="40"
+          :step="2"
+          thumb-label="always"></v-slider>
       </v-form>
 
       <div v-if="lastPosition.latitude">
@@ -62,6 +75,8 @@ export default {
     return {
       id: 0,
       lastPosition: {},
+      accuracyThreshold: 26,
+      positionsUnused: 0,
       positions: [],
       percurso: "",
     }
@@ -78,6 +93,10 @@ export default {
         position.coords.latitude == this.lastPosition.latitude &&
         position.coords.longitude == this.lastPosition.longitude
       ) {
+        return
+      }
+      if (position.coords.accuracy > this.accuracyThreshold) {
+        this.positionsUnused += 1
         return
       }
       const newPosition = {
