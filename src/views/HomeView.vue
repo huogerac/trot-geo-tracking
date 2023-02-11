@@ -89,7 +89,6 @@ export default {
   },
   methods: {
     geoSuccess(position) {
-      debugger
       if (
         position.coords.latitude == this.lastPosition.latitude &&
         position.coords.longitude == this.lastPosition.longitude
