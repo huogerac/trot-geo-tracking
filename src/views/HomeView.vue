@@ -37,10 +37,6 @@
         <p>
           quality:<em>{{ lastPosition.quality }}</em>
         </p>
-        <p>
-          <v-btn color="success" variant="flat" @click="marcarPontoComoBom"> BOM </v-btn>
-          <v-btn color="error" variant="flat" @click="marcarPontoComoRuim"> RUIM </v-btn>
-        </p>
         <p>latLon: {{ latLon }}</p>
         <p>center: {{ center }}</p>
       </div>
@@ -58,7 +54,7 @@
 <script>
 import { mapState } from "pinia"
 import { useLocationStore } from "@/store/location"
-import { OpenLayerMapPointViewer } from "@/components/OpenLayerMapPointViewer"
+import OpenLayerMapPointViewer from "@/components/OpenLayerMapPointViewer"
 
 export default {
   components: {
@@ -123,14 +119,6 @@ export default {
     parar() {
       navigator.geolocation.clearWatch(this.id)
       this.id = 0
-    },
-    marcarPontoComoRuim() {
-      console.log("ruim")
-      this.locationStore.badPosition()
-    },
-    marcarPontoComoBom() {
-      console.log("bom")
-      this.locationStore.goodPosition()
     },
   },
 }
