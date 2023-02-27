@@ -22,8 +22,8 @@
 <script>
 import { mapState } from "pinia"
 import { useLocationStore } from "@/store/location"
-import OpenLayerMapViewer from "@/components/OpenLayerMapViewer.vue"
-import OpenLayerMapPointViewer from "@/components/OpenLayerMapPointViewer.vue"
+import { OpenLayerMapViewer } from "@/components/OpenLayerMapViewer"
+import { OpenLayerMapPointViewer } from "@/components/OpenLayerMapPointViewer"
 
 export default {
   components: {

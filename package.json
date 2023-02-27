@@ -7,7 +7,7 @@
     "preview": "vite preview",
     "lint": "eslint . --ignore-path .gitignore && prettier --check .",
     "lint:fix": "eslint . --fix --ignore-path .gitignore",
-    "test": "vitest --environment jsdom --root src/",
+    "test": "vitest",
     "coverage": "vitest run --coverage",
     "format": "eslint . --fix --ignore-path .gitignore && prettier .  --write"
   },
