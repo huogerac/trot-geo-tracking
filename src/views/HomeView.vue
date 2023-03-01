@@ -84,8 +84,11 @@ export default {
       console.log("Vish, deu ruim!", error)
     },
     iniciar() {
-      //navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError)
-      this.id = navigator.geolocation.watchPosition(this.geoSuccess, this.geoError)
+      const options = {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+      }
+      this.id = navigator.geolocation.watchPosition(this.geoSuccess, this.geoError, options)
     },
     parar() {
       navigator.geolocation.clearWatch(this.id)
