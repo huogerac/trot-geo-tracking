@@ -24,11 +24,9 @@ jobs:
           npm install
 
       - name: linter
-        id: tests
         run: |
           npm run lint
 
       - name: testes
-        id: tests
         run: |
           npm run test run
