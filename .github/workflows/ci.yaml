@@ -1,0 +1,34 @@
+name: GeoTracking CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches: -main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - name: npm install
+        run: |
+          npm install
+
+      - name: linter
+        id: tests
+        run: |
+          npm run lint
+
+      - name: testes
+        id: tests
+        run: |
+          npm run test run
