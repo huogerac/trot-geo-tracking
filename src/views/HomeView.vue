@@ -1,10 +1,11 @@
 <template>
   <v-container class="fill-height">
     <v-responsive class="d-flex align-center text-center fill-height">
+      <h6>v2023-04-28-11:15</h6>
       <v-form>
         <v-text-field v-model="percurso" label="Novo percurso" required></v-text-field>
 
-        <v-btn v-if="id == 0" variant="flat" color="secondary" block @click="iniciar">
+        <v-btn v-if="!timer" variant="flat" color="secondary" block @click="iniciar">
           INICIAR
         </v-btn>
         <v-btn v-else variant="flat" color="secondary" block @click="parar"> PARAR </v-btn>
@@ -13,6 +14,8 @@
       <v-btn color="primary" variant="flat" :to="{ name: 'PercursoDetalheView' }" class="my-4">
         Ver percurso
       </v-btn>
+
+      <h2>Posições salvas: {{ latLon.length }} / {{ tentativas }}</h2>
 
       <open-layer-map-point-viewer v-if="latLon" :positions-list="latLon" :center="center">
       </open-layer-map-point-viewer>
@@ -56,8 +59,10 @@ export default {
   },
   data() {
     return {
-      id: 0,
+      tentativas: 0,
       percurso: "",
+      timer: null,
+      timerInterval_2min: 2 * 60 * 1000,
     }
   },
   computed: {
@@ -89,11 +94,18 @@ export default {
         enableHighAccuracy: true,
         maximumAge: 0,
       }
-      this.id = navigator.geolocation.watchPosition(this.geoSuccess, this.geoError, options)
+
+      // this.id = navigator.geolocation.watchPosition(this.geoSuccess, this.geoError, options)
+      this.timer = setInterval(() => {
+        navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError, options)
+        this.tentativas += 1
+      }, this.timerInterval_2min)
     },
     parar() {
-      navigator.geolocation.clearWatch(this.id)
-      this.id = 0
+      // navigator.geolocation.clearWatch(this.id)
+      clearInterval(this.timer)
+      this.timer = null
+      this.tentativas = 0
     },
   },
 }
