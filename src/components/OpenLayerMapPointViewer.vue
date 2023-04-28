@@ -2,7 +2,7 @@
   <ol-map
     :load-tiles-while-animating="true"
     :load-tiles-while-interacting="true"
-    style="height: 400px">
+    style="height: 600px">
     <ol-view
       ref="view"
       :center="center"

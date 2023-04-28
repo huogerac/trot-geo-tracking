@@ -10,6 +10,13 @@
         <v-btn v-else variant="flat" color="secondary" block @click="parar"> PARAR </v-btn>
       </v-form>
 
+      <v-btn color="primary" variant="flat" :to="{ name: 'PercursoDetalheView' }" class="my-4">
+        Ver percurso
+      </v-btn>
+
+      <open-layer-map-point-viewer v-if="latLon" :positions-list="latLon" :center="center">
+      </open-layer-map-point-viewer>
+
       <div v-if="lastPosition.latitude">
         <h2>Última posição</h2>
         <p>
@@ -27,13 +34,6 @@
         <p>latLon: {{ latLon }}</p>
         <p>center: {{ center }}</p>
       </div>
-
-      <v-btn color="primary" variant="flat" :to="{ name: 'PercursoDetalheView' }" class="my-4">
-        Ver percurso
-      </v-btn>
-
-      <open-layer-map-point-viewer v-if="latLon" :positions-list="latLon" :center="center">
-      </open-layer-map-point-viewer>
     </v-responsive>
   </v-container>
 </template>
