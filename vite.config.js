@@ -31,6 +31,7 @@ export default defineConfig(({ mode }) => {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
       },
+      extensions: [".js", ".vue"],
     },
     server: {
       port: 3000,
