@@ -81,6 +81,7 @@ export default {
       this.locationStore.savePositions(newPosition)
     },
     geoError(error) {
+      // TODO: console log eh ma pratica
       console.log("Vish, deu ruim!", error)
     },
     iniciar() {
