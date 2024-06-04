@@ -1,0 +1,70 @@
+services:
+
+  backend:
+    image: back-geotracking
+    hostname: back-geotracking
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    command: bash -c "python manage.py migrate --noinput && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    expose:
+      - "8000"
+    volumes:
+      - ./:/code
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: "postgres:15-alpine"
+    ports:
+      - 15432:5432
+    expose:
+      - "15432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    restart: on-failure
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -d $POSTGRES_DB -U $POSTGRES_USER"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      #- "./docker/postgres/pg_hba.conf:/usr/local/etc/postgres/postgres.conf"
+
+  frontend:
+    build:
+      context: ./frontend
+    image: front-geotracking
+    hostname: front-geotracking
+    command: npm run dev -- --host
+    ports:
+      - 3000:3000
+    expose:
+      - "3000"
+    env_file:
+      - .env
+    volumes:
+      - /frontend/node_modules
+      - ./frontend:/frontend
+
+  nginx:
+    image: nginx
+    ports:
+      - 80:7999
+    volumes:
+      - ./docker/nginx/default_local:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

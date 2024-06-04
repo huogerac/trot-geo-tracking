@@ -1,0 +1,54 @@
+name: geotracking CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: db_test
+          POSTGRES_PASSWORD: db_test_pwd_ci
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Dockerfile linter using Hadolint
+        uses: jbergstroem/hadolint-gh-action@v1
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+          
+
+
+      - name: Install dependencies (using poetry)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install poetry
+          poetry install
+
+      - name: Run Python Linter
+        run: poetry run flake8
+
+      - name: Run backend Tests
+        env:
+          DATABASE_URL: postgres://postgres:db_test_pwd_ci@localhost:5432/db_test
+        run: poetry run pytest --cache-clear
