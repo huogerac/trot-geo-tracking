@@ -2,7 +2,6 @@
   "recommendations": [
     "vue.volar",
     "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "ZixuanChen.vitest-explorer"
+    "esbenp.prettier-vscode"
   ]
 }
