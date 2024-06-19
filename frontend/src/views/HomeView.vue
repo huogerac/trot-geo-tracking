@@ -3,9 +3,20 @@
     <v-responsive class="d-flex align-center text-center fill-height">
       <h6>v2023-04-28-11:15</h6>
       <v-form>
-        <v-text-field v-model="percurso" label="Novo percurso" required></v-text-field>
+        <v-text-field v-model="description" label="Nome da corrida" required></v-text-field>
 
-        <v-btn v-if="!timer" variant="flat" color="secondary" block @click="iniciar">
+        <p>selected circuit: {{ circuit_selected }}</p>
+        <p>track_id: {{ track_id }}</p>
+        <p>counter: {{ counter }}</p>
+
+        <v-combobox
+          v-model="circuit_selected"
+          label="Circuito"
+          :items="circuits"
+          item-title="name"
+          item-value="id"></v-combobox>
+
+        <v-btn v-if="!track_id" variant="flat" color="secondary" block @click="iniciar">
           INICIAR
         </v-btn>
         <v-btn v-else variant="flat" color="secondary" block @click="parar"> PARAR </v-btn>
@@ -15,12 +26,15 @@
         Ver percurso
       </v-btn>
 
-      <h2>Posições salvas: {{ latLon.length }} / {{ tentativas }}</h2>
+      <h2>Posições salvas: {{ lastSavedPositions.length }} / {{ tentativas }}</h2>
 
-      <open-layer-map-point-viewer v-if="latLon" :positions-list="latLon" :center="center">
+      <open-layer-map-point-viewer
+        v-if="lastSavedPositions"
+        :positions-list="lastSavedPositions"
+        :center="center">
       </open-layer-map-point-viewer>
 
-      <div v-if="lastPosition.latitude">
+      <div v-if="lastPosition">
         <h2>Última posição</h2>
         <p>
           latitude:<em>{{ lastPosition.latitude }}</em>
@@ -34,7 +48,7 @@
         <p>
           quality:<em>{{ lastPosition.quality }}</em>
         </p>
-        <p>latLon: {{ latLon }}</p>
+        <p>lastSavedPositions: {{ lastSavedPositions }}</p>
         <p>center: {{ center }}</p>
       </div>
     </v-responsive>
@@ -43,7 +57,8 @@
 
 <script>
 import { mapState } from "pinia"
-import { useLocationStore } from "@/store/location"
+//import { useLocationStore } from "@/store/locationStore"
+import { useTrackStore } from "@/store/trackStore"
 import OpenLayerMapPointViewer from "@/components/OpenLayerMapPointViewer.vue"
 
 export default {
@@ -51,28 +66,52 @@ export default {
     OpenLayerMapPointViewer,
   },
   setup() {
-    const locationStore = useLocationStore()
+    // const locationStore = useLocationStore()
+    const trackStore = useTrackStore()
 
     return {
-      locationStore,
+      trackStore,
     }
   },
   data() {
     return {
+      watch_id: null,
+      circuit_selected: null,
+      description: "",
       tentativas: 0,
-      percurso: "",
-      timer: null,
-      timerInterval_2min: 2 * 60 * 1000,
+      counter: 0,
+      //percurso: "",
+      //timer: null,
+      //timerInterval_2min: 2 * 60 * 1000,
     }
   },
   computed: {
-    ...mapState(useLocationStore, ["latLon", "lastPosition"]),
+    //...mapState(useLocationStore, ["latLon", "lastPosition"]),
+    ...mapState(useTrackStore, [
+      "circuits",
+      "track_id",
+      "positionsSaved",
+      "positionsIgnored",
+      "lastPosition",
+      "lastSavedPositions",
+    ]),
     center() {
-      return this?.latLon?.slice(-1)[0]
+      //this?.lastSavedPositions?.slice(-1)[0]
+      return this?.lastPosition
     },
   },
+  mounted() {
+    this.getCircuitos()
+  },
   methods: {
+    async getCircuitos() {
+      console.log("obtendo circuitos", this.circuits)
+      this.trackStore.getCircuitos()
+      console.log("obtendo circuitos 2", this.circuits)
+    },
     geoSuccess(position) {
+      this.tentativas += 1
+      this.counter = this.counter + 1
       const newPosition = {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
@@ -81,31 +120,34 @@ export default {
         speed: position.coords.speed,
         altitude: position.coords.altitude,
         altitudeAccuracy: position.coords.altitudeAccuracy,
-        date: new Date().getTime(),
+        dateTime: new Date().toISOString(),
       }
-      this.locationStore.savePositions(newPosition)
+      // this.locationStore.savePositions(newPosition)
+      // console.log(newPosition)
+      this.trackStore.salvarPosicoes(newPosition)
     },
     geoError(error) {
       // TODO: console log eh ma pratica
       console.log("Vish, deu ruim!", error)
     },
     iniciar() {
+      this.trackStore.iniciarTracking(this.description, this.circuit_selected.id)
       const options = {
         enableHighAccuracy: true,
         maximumAge: 0,
       }
-
-      // this.id = navigator.geolocation.watchPosition(this.geoSuccess, this.geoError, options)
-      this.timer = setInterval(() => {
-        navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError, options)
-        this.tentativas += 1
-      }, this.timerInterval_2min)
+      this.watch_id = navigator.geolocation.watchPosition(this.geoSuccess, this.geoError, options)
+      // this.timer = setInterval(() => {
+      //   navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError, options)
+      //
+      // }, this.timerInterval_2min)
     },
     parar() {
-      // navigator.geolocation.clearWatch(this.id)
-      clearInterval(this.timer)
-      this.timer = null
-      this.tentativas = 0
+      navigator.geolocation.clearWatch(this.watch_id)
+      //clearInterval(this.timer)
+      //this.timer = null
+      //this.tentativas = 0
+      this.trackStore.pararTracking()
     },
   },
 }

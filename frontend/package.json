@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@mdi/font": "7.2.96",
+    "axios": "^1.7.2",
     "pinia": "^2.0.35",
     "roboto-fontface": "*",
     "vue": "^3.2.47",

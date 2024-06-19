@@ -1,6 +1,6 @@
 import { setActivePinia, createPinia } from "pinia"
 import { beforeEach, expect, describe, test } from "vitest"
-import { useLocationStore } from "@/store/location"
+import { useLocationStore } from "@/store/locationStore"
 
 describe("Testa location store: Salvar Posições", () => {
   beforeEach(() => {

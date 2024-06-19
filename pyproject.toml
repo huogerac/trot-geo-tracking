@@ -20,6 +20,7 @@ python-decouple = "^3.8"
 django-ninja = "^1.1.0"
 whitenoise = "^6.4.0"
 gunicorn = "^20.1.0"
+shapely = "^2.0.4"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"

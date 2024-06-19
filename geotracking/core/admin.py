@@ -1,10 +1,8 @@
 from django.contrib import admin
 
-from .models import Track
+from .models import Track, Circuit, Point
 
 
-class TrackAdmin(admin.ModelAdmin):
-    list_display = ("description", "done")
-
-
-admin.site.register(Track, TrackAdmin)
+admin.site.register(Track)
+admin.site.register(Circuit)
+admin.site.register(Point)
