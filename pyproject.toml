@@ -14,13 +14,14 @@ asgiref = "^3.6.0"
 sqlparse = "^0.4.4"
 tzdata = "^2023.3"
 django-extensions = "^3.2.1"
-psycopg2 = "^2.9.6"
 dj-database-url = "^2.0.0"
 python-decouple = "^3.8"
 django-ninja = "^1.1.0"
 whitenoise = "^6.4.0"
 gunicorn = "^20.1.0"
 shapely = "^2.0.4"
+psycopg2 = "^2.9.9"
+django-cors-headers = "^4.3.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
@@ -30,7 +31,6 @@ pytest = "^7.3.1"
 pytest-django = "^4.5.2"
 ipython = "^8.17.1"
 mock = "^5.1.0"
-django-cors-headers = "^4.3.0"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "geotracking.geotracking.settings"
