@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height">
     <v-responsive class="d-flex align-center text-center fill-height">
-      <h6>v2023-04-28-11:15</h6>
+      <h6>v2024-06-20-07:15</h6>
       <v-form>
         <v-text-field v-model="description" label="Nome da corrida" required></v-text-field>
 
@@ -28,14 +28,15 @@
 
       <h2>Posições salvas: {{ lastSavedPositions.length }} / {{ tentativas }}</h2>
 
+      <h3 v-if="lastSavedPositions">Map point viewer ({{ lastSavedPositions.length }})</h3>
       <open-layer-map-point-viewer
         v-if="lastSavedPositions"
-        :positions-list="lastSavedPositions"
+        :positions-list="latLon"
         :center="center">
       </open-layer-map-point-viewer>
 
+      <h2>Última posição <span v-if="lastPosition">OK</span></h2>
       <div v-if="lastPosition">
-        <h2>Última posição</h2>
         <p>
           latitude:<em>{{ lastPosition.latitude }}</em>
         </p>
@@ -94,10 +95,14 @@ export default {
       "positionsIgnored",
       "lastPosition",
       "lastSavedPositions",
+      "latLon",
     ]),
     center() {
+      if (this.lastPosition) {
+        return [this.lastPosition.longitude, this.lastPosition.latitude]
+      }
       //this?.lastSavedPositions?.slice(-1)[0]
-      return this?.lastPosition
+      return []
     },
   },
   mounted() {

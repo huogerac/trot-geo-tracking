@@ -34,14 +34,15 @@ def start_track(request, track: TrackSchemaIn):
 @router.post("/tracks/{track_id}/points/save", response={201: dict})
 @csrf_exempt
 def save_points(request, track_id: int, points: ListPointsSchema):
-    saved, ignored = tracks_svc.save_points(track_id, points)
+    saved, ignored = tracks_svc.save_points(track_id, points.points)
     return JsonResponse(
         {
             "result": {
                 "points_saved": saved,
                 "points_ignored": ignored,
             }
-        }
+        },
+        status=201,
     )
 
 

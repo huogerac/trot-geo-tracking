@@ -26,6 +26,11 @@ export const useTrackStore = defineStore("TrackStore", {
       this.track_id = response.id
       console.log("start:", response)
       this.circuitsLoading = false
+      this.positions = []
+      this.lastSavedPositions = []
+      this.lastPosition = null
+      this.positionsSaved = 0
+      this.positionsIgnored = 0
     },
     async salvarPosicoes(position) {
       this.circuitsLoading = true
@@ -47,16 +52,18 @@ export const useTrackStore = defineStore("TrackStore", {
     },
     async pararTracking() {
       this.circuitsLoading = true
-      const response = await TrackApi.stopTrack(this.track_id)
+      let response = await TrackApi.savePoints(this.track_id, this.positions)
       console.log(response)
-
-      this.track_id = null
-      this.track_id = null
       this.positions = []
+
+      response = await TrackApi.stopTrack(this.track_id)
+      console.log(response)
+      this.track_id = null
       this.positionsSaved = 0
-      this.positionsIgnored = 0
-      this.lastPosition = null
-      this.lastSavedPositions = []
+      this.circuitsLoading = false
     },
+  },
+  getters: {
+    latLon: (state) => state.lastSavedPositions.map((obj) => [obj.longitude, obj.latitude]),
   },
 })

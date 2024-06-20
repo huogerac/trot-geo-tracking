@@ -49,7 +49,7 @@ def save_points(track_id: int, points, MIN_TURN_SEC=10, MIN_TURN_POINTS=42):
     saved = 0
     ignored = 0
     for item in points:
-        point_data = item.get("point_data")
+        point_data = dict(item)
         local_date = point_data.get("dateTime")
 
         point = Point(

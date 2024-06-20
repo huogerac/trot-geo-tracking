@@ -22,7 +22,8 @@ api.add_router("/core/", core_router, tags=["core"])
 @api.exception_handler(ValidationError)
 def validation_errors(request, exc):
     def parse_input_validation(error):
-        field = ".".join(error.get("loc"))
+        field_path = [f for f in error.get("loc") if type(f) is str]
+        field = ".".join(field_path)
         return f"{field}: {error.get('msg')} ({error.get('type')})"
 
     error = ""
