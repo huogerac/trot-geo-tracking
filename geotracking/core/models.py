@@ -37,6 +37,7 @@ class Point(models.Model):
     )
     turn = models.IntegerField()
     point_data = models.JSONField(default=dict)
+    ignored = models.BooleanField(default=False)
     created_at_local = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 

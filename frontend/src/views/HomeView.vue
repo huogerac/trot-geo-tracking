@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height">
     <v-responsive class="d-flex align-center text-center fill-height">
-      <h6>v2024-06-20-07:15</h6>
+      <h6>v2024-06-21-21:00</h6>
       <v-form>
         <v-text-field v-model="description" label="Nome da corrida" required></v-text-field>
 
@@ -26,6 +26,8 @@
         Ver percurso
       </v-btn>
 
+      <h2>Speed: {{ speed }}</h2>
+      <h2>{{ trackStatus }}</h2>
       <h2>Posições salvas: {{ lastSavedPositions.length }} / {{ tentativas }}</h2>
 
       <h3 v-if="lastSavedPositions">Map point viewer ({{ lastSavedPositions.length }})</h3>
@@ -81,6 +83,7 @@ export default {
       description: "",
       tentativas: 0,
       counter: 0,
+      speed: 0,
       //percurso: "",
       //timer: null,
       //timerInterval_2min: 2 * 60 * 1000,
@@ -96,6 +99,7 @@ export default {
       "lastPosition",
       "lastSavedPositions",
       "latLon",
+      "trackStatus",
     ]),
     center() {
       if (this.lastPosition) {
@@ -117,6 +121,7 @@ export default {
     geoSuccess(position) {
       this.tentativas += 1
       this.counter = this.counter + 1
+      this.speed = position.coords.speed
       const newPosition = {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,

@@ -3,6 +3,7 @@ import TrackApi from "@/api/tracks.api.js"
 
 export const useTrackStore = defineStore("TrackStore", {
   state: () => ({
+    trackStatus: "waiting",
     circuitsLoading: false,
     circuits: [],
     track_id: null,
@@ -25,6 +26,7 @@ export const useTrackStore = defineStore("TrackStore", {
       const response = await TrackApi.startTrack(description, circuit_id)
       this.track_id = response.id
       console.log("start:", response)
+      this.trackStatus = `Track started: {response.id}`
       this.circuitsLoading = false
       this.positions = []
       this.lastSavedPositions = []
@@ -37,13 +39,15 @@ export const useTrackStore = defineStore("TrackStore", {
       this.positions.push(position)
       this.lastPosition = position
       this.lastSavedPositions.push(position)
-      if (this.positions.length >= 100) {
+      if (this.positions.length >= 60) {
+        this.trackStatus = `Saving points`
         const response = await TrackApi.savePoints(this.track_id, this.positions)
         console.log(response)
         this.positions = []
-        if (response.points_saved) {
-          this.positionsSaved = this.positionsSaved + response.points_saved
-          this.positionsIgnored = this.positionsIgnored + response.points_ignored
+        this.trackStatus = `Saved: ${response?.result?.points_saved}; Ignored: ${response?.result?.points_ignored}; Turn: ${response?.result?.current_turn}`
+        if (response?.result?.points_saved) {
+          this.positionsSaved = this.positionsSaved + response.result.points_saved
+          this.positionsIgnored = this.positionsIgnored + response.result.points_ignored
         }
         if (this.lastSavedPositions.length > 1000) {
           this.lastSavedPositions.splice(0, this.lastSavedPositions.length - 1000)

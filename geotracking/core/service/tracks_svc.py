@@ -40,6 +40,7 @@ def save_points(track_id: int, points, MIN_TURN_SEC=10, MIN_TURN_POINTS=42):
     if not track:
         raise BusinessError("Invalid Track: id ", track_id)
 
+    logger.info(f"Saving points: {len(points)}")
     start_line = Polygon(shape(track.circuit.start_line))
 
     # { "latitude": -28.5048571, "longitude": -49.0151939, "latLongAccuracy": 19.214000701904297,
@@ -47,7 +48,7 @@ def save_points(track_id: int, points, MIN_TURN_SEC=10, MIN_TURN_POINTS=42):
     #  "date": 1675385450042 }
 
     saved = 0
-    ignored = 0
+    total_ignored = 0
     for item in points:
         point_data = dict(item)
         local_date = point_data.get("dateTime")
@@ -63,12 +64,13 @@ def save_points(track_id: int, points, MIN_TURN_SEC=10, MIN_TURN_POINTS=42):
                 }
             )
         )
+        ignored = False
 
         # Descarta ponto, se não passou pela linha de início
         cross_start_line = point.intersects(start_line)
         if not track.started and not cross_start_line:
-            ignored += 1
-            continue
+            ignored = True
+            total_ignored += 1
 
         current_turn = (
             PointModel.objects.filter(track_id=track_id)
@@ -78,6 +80,9 @@ def save_points(track_id: int, points, MIN_TURN_SEC=10, MIN_TURN_POINTS=42):
         )
 
         if cross_start_line:
+            logger.info(
+                f"Crossed start line: lat:{point_data.get('latitude')} long:{point_data.get('longitude')}"
+            )
             if not track.started:
                 track.started = True
                 track.save()
@@ -104,14 +109,17 @@ def save_points(track_id: int, points, MIN_TURN_SEC=10, MIN_TURN_POINTS=42):
             )
             if new_turn:
                 current_turn += 1
+                logger.info(f"New Turn: {current_turn}")
 
         new_point = PointModel(
             track=track,
             turn=current_turn,
             point_data=point_data,
+            total_ignored=ignored,
             created_at_local=local_date,
         )
         new_point.save()
         saved += 1
 
-    return (saved, ignored)
+    logger.info(f"Saved: {saved}; Ignored: {total_ignored}")
+    return (saved, total_ignored, current_turn)
