@@ -108,6 +108,12 @@ export default {
       //this?.lastSavedPositions?.slice(-1)[0]
       return []
     },
+    speedKmPerHour() {
+      if (this.speed) {
+        return (this.speed * 3600) / 1000
+      }
+      return 0
+    },
   },
   mounted() {
     this.getCircuitos()

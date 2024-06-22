@@ -26,7 +26,7 @@ export const useTrackStore = defineStore("TrackStore", {
       const response = await TrackApi.startTrack(description, circuit_id)
       this.track_id = response.id
       console.log("start:", response)
-      this.trackStatus = `Track started: {response.id}`
+      this.trackStatus = `Track started: ${response.id}`
       this.circuitsLoading = false
       this.positions = []
       this.lastSavedPositions = []
