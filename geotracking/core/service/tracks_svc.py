@@ -115,7 +115,7 @@ def save_points(track_id: int, points, MIN_TURN_SEC=10, MIN_TURN_POINTS=42):
             track=track,
             turn=current_turn,
             point_data=point_data,
-            total_ignored=ignored,
+            ignored=ignored,
             created_at_local=local_date,
         )
         new_point.save()

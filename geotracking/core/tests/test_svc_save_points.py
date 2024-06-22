@@ -157,5 +157,5 @@ def test_deve_salvar_pontos():
     )
     volta1, volta2 = results
 
-    assert volta1 == {"turn": 1, "count": 15}
+    assert volta1 == {"turn": 1, "count": 17}
     assert volta2 == {"turn": 2, "count": 7}

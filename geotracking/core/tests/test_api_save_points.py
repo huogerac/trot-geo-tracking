@@ -80,7 +80,8 @@ def test_deve_savar_2_pontos(client):
     assert resp.status_code == 201
     assert resp.json() == {
         "result": {
-            "points_saved": 0,
+            "points_saved": 2,
             "points_ignored": 2,
+            "current_turn": 1,
         }
     }
