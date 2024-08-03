@@ -1,5 +1,6 @@
 import logging
-from shapely.geometry import shape, Polygon, Point
+from shapely.geometry import shape, Point, LineString
+from shapely import buffer
 from django.db.models import Max
 from django.utils import timezone
 
@@ -14,6 +15,30 @@ def list_circuits():
     logger.info("SERVICE list circuits")
     circuits_list = Circuit.objects.all()
     return [item.to_dict_json() for item in circuits_list]
+
+
+def list_tracks():
+    tracks_list = Track.objects.filter(finished=True).order_by("-id")
+    return [item.to_dict_json() for item in tracks_list]
+
+
+def list_points(track_id):
+    points = PointModel.objects.filter(track_id=track_id, ignored=False).order_by("id")
+    return [item.to_dict_json() for item in points]
+
+
+def list_points_compact(track_id):
+    points = PointModel.objects.filter(track_id=track_id, ignored=False).order_by("id")
+    return [
+        {
+            "id": item.id,
+            "track_id": item.track_id,
+            "turn": item.turn,
+            "latitude": item.point_data.get("latitude"),
+            "longitude": item.point_data.get("longitude"),
+        }
+        for item in points
+    ]
 
 
 def start_track(description: str, circuit_id: int) -> dict:
@@ -32,21 +57,37 @@ def stop_track(track_id: int) -> dict:
     if not track:
         raise BusinessError("Invalid Track: id ", track_id)
     track.finished = True
+    track.save()
     return track.to_dict_json()
 
 
-def save_points(track_id: int, points, MIN_TURN_SEC=10, MIN_TURN_POINTS=42):
+def save_points(
+    track_id: int, points, MIN_TURN_SEC=20, MIN_TURN_POINTS=42, BUFFER_SIZE=0.00001
+):
+    """
+    Saves a collection of points in the following format:
+    [
+      {
+        "latitude": -28.5048571, "longitude": -49.0151939, "latLongAccuracy": 19.214000701904297,
+        "heading": null, "speed": null, "altitude": 7.099999904632568, "altitudeAccuracy": null,
+        "dateTime": 1675385450042
+      }
+    ]
+    """
+    logger.info(f"Saving points: {len(points)}")
     track = Track.objects.filter(id=track_id).first()
     if not track:
         raise BusinessError("Invalid Track: id ", track_id)
 
-    logger.info(f"Saving points: {len(points)}")
-    start_line = Polygon(shape(track.circuit.start_line))
+    properties = track.circuit.start_line.get("properties", {})
+    # start_line = Polygon(shape(track.circuit.start_line))
+    start_line = LineString(shape(track.circuit.start_line))
 
-    # { "latitude": -28.5048571, "longitude": -49.0151939, "latLongAccuracy": 19.214000701904297,
-    #  "heading": null, "speed": null, "altitude": 7.099999904632568, "altitudeAccuracy": null,
-    #  "date": 1675385450042 }
+    MIN_TURN_SEC = properties.get("MIN_TURN_SEC", MIN_TURN_SEC)
+    MIN_TURN_POINTS = properties.get("MIN_TURN_POINTS", MIN_TURN_POINTS)
+    BUFFER_SIZE = properties.get("BUFFER_SIZE", BUFFER_SIZE)
 
+    current_turn = 0
     saved = 0
     total_ignored = 0
     for item in points:
@@ -67,7 +108,8 @@ def save_points(track_id: int, points, MIN_TURN_SEC=10, MIN_TURN_POINTS=42):
         ignored = False
 
         # Descarta ponto, se não passou pela linha de início
-        cross_start_line = point.intersects(start_line)
+        point_buffer = buffer(point, distance=BUFFER_SIZE)
+        cross_start_line = point_buffer.intersects(start_line)
         if not track.started and not cross_start_line:
             ignored = True
             total_ignored += 1
@@ -88,7 +130,9 @@ def save_points(track_id: int, points, MIN_TURN_SEC=10, MIN_TURN_POINTS=42):
                 track.save()
 
             current_saved_points = PointModel.objects.filter(
-                track_id=track_id, turn=current_turn
+                track_id=track_id,
+                turn=current_turn,
+                ignored=False,
             ).count()
 
             first_saved_point = (

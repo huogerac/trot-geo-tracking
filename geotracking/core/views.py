@@ -7,7 +7,14 @@ from django.views.decorators.csrf import csrf_exempt
 
 from ninja import Router
 
-from .schemas import ListCircuitsSchema, TrackSchema, TrackSchemaIn, ListPointsSchema
+from .schemas import (
+    ListCircuitsSchema,
+    TrackSchema,
+    TrackSchemaIn,
+    ListPointsSchema,
+    ListTracksSchema,
+    ListPointsSchemaOut,
+)
 from .service import tracks_svc
 
 router = Router()
@@ -16,10 +23,25 @@ logger = logging.getLogger(__name__)
 
 @router.get("/circuits", response=ListCircuitsSchema)
 def list_circuits(request):
-    """Lista Tracks"""
+    """Lista Circuits"""
     logger.info("API list tracks")
     tracks = tracks_svc.list_circuits()
     return JsonResponse({"circuits": tracks})
+
+
+@router.get("/tracks", response=ListTracksSchema)
+def list_tracks(request):
+    """Lista Tracks"""
+    logger.info("API list tracks")
+    tracks = tracks_svc.list_tracks()
+    return JsonResponse({"tracks": tracks})
+
+
+@router.get("/tracks/{track_id}/points", response=ListPointsSchemaOut)
+def list_points(request, track_id: int):
+    """Lista Tracks"""
+    points = tracks_svc.list_points_compact(track_id)
+    return JsonResponse({"points": points})
 
 
 @router.post("/tracks/start", response={201: TrackSchema})

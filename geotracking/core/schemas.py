@@ -36,6 +36,10 @@ class TrackSchema(ModelSchema):
     )
 
 
+class ListTracksSchema(Schema):
+    tracks: List[TrackSchema]
+
+
 class CircuitSchema(ModelSchema):
     class Meta:
         model = Circuit
@@ -86,3 +90,7 @@ class PointSchemaIn(Schema):
 
 class ListPointsSchema(Schema):
     points: List[PointSchemaIn]
+
+
+class ListPointsSchemaOut(Schema):
+    points: List[dict]
