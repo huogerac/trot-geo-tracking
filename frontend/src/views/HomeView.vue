@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height">
     <v-responsive class="d-flex align-center text-center fill-height">
-      <h6>v2024-06-21-21:00</h6>
+      <h6>v2024-08-02-22:04</h6>
       <v-form>
         <v-text-field v-model="description" label="Nome da corrida" required></v-text-field>
 
@@ -9,28 +9,35 @@
         <p>track_id: {{ track_id }}</p>
         <p>counter: {{ counter }}</p>
 
-        <v-combobox
-          v-model="circuit_selected"
-          label="Circuito"
-          :items="circuits"
-          item-title="name"
-          item-value="id"></v-combobox>
+        <div v-if="description">
+          <v-combobox
+            v-model="circuit_selected"
+            label="Circuito"
+            :items="circuits"
+            item-title="name"
+            item-value="id"></v-combobox>
 
-        <v-btn v-if="!track_id" variant="flat" color="secondary" block @click="iniciar">
-          INICIAR
-        </v-btn>
-        <v-btn v-else variant="flat" color="secondary" block @click="parar"> PARAR </v-btn>
+          <v-btn v-if="!track_id" variant="flat" color="secondary" block @click="iniciar">
+            INICIAR
+          </v-btn>
+          <v-btn v-else variant="flat" color="secondary" block @click="parar"> PARAR </v-btn>
+        </div>
       </v-form>
 
+      <v-btn v-if="!track_id" outlined class="ma-4" @click="listar"> Listar corridas </v-btn>
+
+      <!--
       <v-btn color="primary" variant="flat" :to="{ name: 'PercursoDetalheView' }" class="my-4">
         Ver percurso
-      </v-btn>
+      </v-btn>-->
 
-      <h2>Speed: {{ speed }}</h2>
-      <h2>{{ trackStatus }}</h2>
-      <h2>Posições salvas: {{ lastSavedPositions.length }} / {{ tentativas }}</h2>
+      <div v-if="track_id">
+        <h2>Speed: {{ speed }}</h2>
+        <h2>{{ trackStatus }}</h2>
+        <h2>Posições salvas: {{ lastSavedPositions.length }} / {{ tentativas }}</h2>
+        <h3 v-if="lastSavedPositions">Map point viewer ({{ lastSavedPositions.length }})</h3>
+      </div>
 
-      <h3 v-if="lastSavedPositions">Map point viewer ({{ lastSavedPositions.length }})</h3>
       <open-layer-map-point-viewer
         v-if="lastSavedPositions"
         :positions-list="latLon"
@@ -123,6 +130,9 @@ export default {
       console.log("obtendo circuitos", this.circuits)
       this.trackStore.getCircuitos()
       console.log("obtendo circuitos 2", this.circuits)
+    },
+    listar() {
+      this.$router.push("corridas")
     },
     geoSuccess(position) {
       this.tentativas += 1

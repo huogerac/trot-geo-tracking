@@ -5,6 +5,14 @@ export default {
     const response = await api.get("/api/core/circuits")
     return response.data
   },
+  getTracks: async () => {
+    const response = await api.get("/api/core/tracks")
+    return response.data
+  },
+  getPoints: async (track_id) => {
+    const response = await api.get(`/api/core/tracks/${track_id}/points`)
+    return response.data
+  },
   startTrack: async (description, circuit_id) => {
     const json = { description, circuit_id }
     const response = await api.post("/api/core/tracks/start", json)

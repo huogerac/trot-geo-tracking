@@ -12,14 +12,23 @@ export const useTrackStore = defineStore("TrackStore", {
     positionsIgnored: 0,
     lastPosition: null,
     lastSavedPositions: [],
+    tracks: [],
+    trackPoints: [],
   }),
   actions: {
     async getCircuitos() {
       this.circuitsLoading = true
       const response = await TrackApi.getCircuits()
       this.circuits = response.circuits
-      console.log("store:circuits:", this.circuits)
       this.circuitsLoading = false
+    },
+    async getTracks() {
+      const response = await TrackApi.getTracks()
+      this.tracks = response.tracks
+    },
+    async getPoints(track_id) {
+      const response = await TrackApi.getPoints(track_id)
+      this.trackPoints = response.points
     },
     async iniciarTracking(description, circuit_id) {
       this.circuitsLoading = true
@@ -39,7 +48,7 @@ export const useTrackStore = defineStore("TrackStore", {
       this.positions.push(position)
       this.lastPosition = position
       this.lastSavedPositions.push(position)
-      if (this.positions.length >= 60) {
+      if (this.positions.length >= 40) {
         this.trackStatus = `Saving points`
         const response = await TrackApi.savePoints(this.track_id, this.positions)
         console.log(response)
