@@ -13,6 +13,12 @@ export default {
     const response = await api.get(`/api/core/tracks/${track_id}/points`)
     return response.data
   },
+  getDownloadPoints: async (track_id) => {
+    const response = await api.get(`/api/core/tracks/${track_id}/download`, {
+      responseType: "blob",
+    })
+    return response
+  },
   startTrack: async (description, circuit_id) => {
     const json = { description, circuit_id }
     const response = await api.post("/api/core/tracks/start", json)

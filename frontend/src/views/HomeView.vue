@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height">
     <v-responsive class="d-flex align-center text-center fill-height">
-      <h6>v2024-08-02-22:04</h6>
+      <h6>v2024-08-07-22:04</h6>
       <v-form>
         <v-text-field v-model="description" label="Nome da corrida" required></v-text-field>
 

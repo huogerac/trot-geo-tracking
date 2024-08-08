@@ -3,8 +3,6 @@
     <v-responsive class="d-flex align-center text-center fill-height">
       <v-btn outlined class="ma-4" @click="home">Home</v-btn>
       <h1>Corridas</h1>
-      <p v-for="track in tracks" :key="track.id">{{ track.id }} - {{ track.description }}</p>
-
       <v-table>
         <thead>
           <tr>
@@ -19,6 +17,11 @@
             <td>{{ item.description }}</td>
             <td>
               <v-btn density="compact" icon="mdi-map" @click="detalhe(item.id)"></v-btn>
+              <v-btn
+                density="compact"
+                icon="mdi-download"
+                :loading="downloading"
+                @click="download(item.id)"></v-btn>
             </td>
           </tr>
         </tbody>
@@ -30,6 +33,8 @@
 <script>
 import { mapState } from "pinia"
 import { useTrackStore } from "@/store/trackStore"
+import TrackApi from "@/api/tracks.api.js"
+import { saveAs } from "file-saver"
 
 export default {
   setup() {
@@ -41,6 +46,7 @@ export default {
   data() {
     return {
       corridas: [],
+      downloading: false,
     }
   },
   computed: {
@@ -55,6 +61,12 @@ export default {
     },
     detalhe(corridaId) {
       this.$router.push({ name: "CorridaDetalheView", params: { id: corridaId } })
+    },
+    async download(corridaId) {
+      this.downloading = true
+      const response = await TrackApi.getDownloadPoints(corridaId)
+      this.downloading = false
+      saveAs(response.data, `track_${corridaId}_data.xlsx`)
     },
     async getTracks() {
       this.trackStore.getTracks()
