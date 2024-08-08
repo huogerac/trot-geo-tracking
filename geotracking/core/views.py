@@ -1,7 +1,7 @@
 # coding: utf-8
 import logging
 
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -74,3 +74,10 @@ def save_points(request, track_id: int, points: ListPointsSchema):
 def stop_track(request, track_id: int):
     result = tracks_svc.stop_track(track_id)
     return JsonResponse({"result": result})
+
+
+@router.get("/tracks/{track_id}/download")
+@csrf_exempt
+def download_track_data(request, track_id: int):
+    excel_file_output = tracks_svc.download_points(track_id)
+    return FileResponse(open(excel_file_output, "rb"), as_attachment=True)
