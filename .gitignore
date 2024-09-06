@@ -112,3 +112,6 @@ staticfiles/
 venv/
 ENV/
 .python-version
+
+# Dados
+.notebooks/data
